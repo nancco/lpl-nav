@@ -34,7 +34,9 @@
 ├── fan-index.html         # 选手速查页
 
 └── LICENSE                # 开源协议
+
 2. 直接本地双击打开即可预览；
+
 3. 线上部署：Gitee Pages / Vercel / Netlify / 静态服务器都支持，上传文件即可。
 
 ### 中文简述
