@@ -191,7 +191,7 @@ main{min-width:0}
 .filter-scroll .filters .sp{display:none}
 .filter-scroll .filters .fl{flex-wrap:nowrap;flex:0 0 auto}
 .filter-scroll .filters .chip{flex:0 0 auto;white-space:nowrap}
-.filter-scroll .filters #importBtn{margin-left:auto}
+.filter-scroll .filters .f-sort{margin-left:auto}
 .scroll-arrow{
   flex:0 0 auto;width:26px;height:26px;display:grid;place-items:center;
   border:1px solid var(--line);background:var(--card);border-radius:8px;
@@ -471,7 +471,7 @@ kbd{
     <div class="filters" id="filters">
     <div class="fl">
       <button class="chip on" data-pf="all">全部</button>
-      <button class="chip" data-pf="lpl">直播官网</button>
+      <button class="chip" data-pf="lpl">官网</button>
       <button class="chip" data-pf="bili">B站</button>
       <button class="chip" data-pf="huya">虎牙</button>
       <button class="chip" data-pf="dy">抖音</button>
@@ -482,9 +482,7 @@ kbd{
     </div>
     <button class="chip" id="foldToggle">全部折叠</button>
     <div class="sp"></div>
-    <button class="chip" id="importBtn">
-    </button>
-    <input type="file" id="importFile" accept=".json,application/json" hidden>
+    <button class="chip f-sort" id="sortBtn">
       <svg viewBox="0 0 24 24"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M14 6h6"/><path d="M14 12h4"/><path d="M14 18h2"/></svg>
       <span id="sortTxt">默认顺序</span>
     </button>
@@ -518,7 +516,7 @@ kbd{
 <footer>
   <div class="frow">
     <div class="fleft">
-      <div>纯粉丝自制的观赛入口聚合页，与腾讯、Riot、哔哩哔哩、虎牙等平台均无隶属关系。</div>
+      <div>纯粉丝自制的观赛入口聚合页，与腾讯、Riot、B站、虎牙各平台均无隶属关系。</div>
       <div>只做指路，不转载任何赛事内容；赛事版权归 ©TENCENT & ©Riot Games, Inc. 及各授权平台所有。</div>
       <div class="ftip">纯前端项目，建议先点右上角「导出」存一份本地备份，网络访问异常时可以直接打开本地文件。</div>
     </div>
@@ -580,10 +578,10 @@ let GROUPS = [
     title: "备用&官方二路流",
     desc: "主直播间卡顿、掉帧时改走备用源，赛事期间同步开播。",
     items: [
-      {name:"B站二路 · 高能观赛团", ic:"bili", room:"616", url:"https://live.bilibili.com/616", note:"官方二路流/备用"},
+      {name:"B站二路 · 高能观赛团", ic:"bili", room:"616", url:"https://live.bilibili.com/616", note:"官方二路流 / 备用"},
       {name:"B站4K赛事", ic:"bili", room:"24", url:"https://live.bilibili.com/24", note:"哔哩哔哩4K高码率赛事流"},
        {name:"虎牙赛事副舞台", ic:"huya", room:"660137", url:"https://www.huya.com/660137", note:"虎牙官方备用流"},
-       {name:"腾讯视频游戏频道", ic:"", url:"https://v.qq.com/channel/game_new", note:"腾讯视频游戏频道备用流"}
+       {name:"腾讯视频", ic:"", url:"https://v.qq.com/channel/game_new", note:"游戏频道"}
     ]
   },
   {
@@ -612,7 +610,7 @@ let GROUPS = [
       {name:"滔搏 TES 电子竞技俱乐部", ic:"bili", url:"https://space.bilibili.com/300634025", note:"TES | TOP ESPORTS"},
       {name:"iG 电子竞技俱乐部", ic:"bili", url:"https://space.bilibili.com/29992385", note:"IG | Invictus Gaming"},
       {name:"JDG 京东电子竞技俱乐部", ic:"bili", url:"https://space.bilibili.com/156619610", note:"JDG | JD Gaming"},
-      {name:"WBG 微博英雄联盟分部", ic:"bili", url:"https://space.bilibili.com/302651406", note:"WBG | WEIBO GAMING"},
+      {name:"WBG 英雄联盟分部", ic:"bili", url:"https://space.bilibili.com/302651406", note:"WBG | WEIBO GAMING"},
       {name:"NIP 睡衣忍者电子竞技俱乐部", ic:"bili", url:"https://space.bilibili.com/390601281", note:"NIP | Ninjas in Pyjamas"},
       {name:"WE 电子竞技俱乐部", ic:"bili", url:"https://space.bilibili.com/7294940", note:"WE | Team WE"},
       {name:"EDG 电子竞技俱乐部", ic:"bili", url:"https://space.bilibili.com/31536760", note:"EDG | EDward Gaming"},
@@ -637,7 +635,7 @@ let GROUPS = [
     title: "玩家社区&资讯",
     desc: "赛后讨论、节奏现场、硬核分析，按口味自取。",
     items: [
-      {name:"英雄联盟吧", ic:"tieba", url:"https://tieba.baidu.com/f?kw=%25E8%258B%25B1%25E9%259B%2584%25E8%2581%2594%25E7%259B%259F", note:"贴吧主吧"},
+      {name:"英雄联盟吧", ic:"tieba", url:"https://tieba.baidu.com/f?kw=%E8%8B%B1%E9%9B%84%E8%81%AA%E7%9B%9F", note:"贴吧主吧"},
       {name:"抗压背锅吧", ic:"tieba", url:"https://tieba.baidu.com/f?kw=%E6%8A%97%E5%8E%8B%E8%83%8C%E9%94%85", note:"赛后讨论主场"},
       {name:"NGA 英雄联盟板块", ic:"nga", url:"https://bbs.nga.cn/thread.php?fid=-152678", note:"硬核赛事分析"},
       {name:"虎扑 LOL 区", ic:"hupu", url:"https://bbs.hupu.com/lol", note:"赛后热点讨论"},
@@ -676,13 +674,12 @@ let GROUPS = [
     items: [
       {name:"英雄联盟官网", ic:"lol", url:"https://lol.qq.com/", note:"国服官网（腾讯游戏）"},
       {name:"游戏下载", ic:"lol", url:"https://lol.qq.com/download.shtml?ADTAG=lolweb.v3", note:"看完比赛玩一把~"},
-      {name:"腾讯游戏官网", ic:"lol", url:"https://game.qq.com/", note:"腾讯游戏"},
       {name:"拳头游戏官网", ic:"lol", url:"https://www.riotgames.com/", note:"拳头游戏官网"}
     ]
   },
   {
       title: "游戏官方视频账号",
-    desc: "各平台视频官方号（优先打开对应APP，在APP内搜索：英雄联盟 / 英雄联盟赛事，网页仅备用）",
+    desc: "各平台视频官方号（各平台视频官方账号👉优先打开对应APP，在APP内搜索：英雄联盟 / 英雄联盟赛事，网页仅备用）",
     items: [
       {name:"哔哩哔哩英雄联盟赛事", ic:"bili", url:"https://space.bilibili.com/50329118", note:"赛事B站官方直播号"},
       {name:"英雄联盟赛事", ic:"bili", url:"https://space.bilibili.com/108532523", note:"赛事B站官方频道"},
@@ -699,7 +696,7 @@ let GROUPS = [
   },
   {
     title: "游戏频道/分区",
-    desc: "各平台频道/分区（优先打开对应APP，在APP内搜索：英雄联盟，或者去APP分区、话题标签页查找，网页仅备用跳转）",
+    desc: "各平台频道/分区（各平台频道分区👉优先打开对应APP，在APP内搜索：英雄联盟，或者去APP分区、话题标签页查找，网页仅备用跳转）",
     items: [
       {name:"哔哩哔哩分区", ic:"bili", url:"https://live.bilibili.com/lol"},
       {name:"虎牙直播分区", ic:"huya", url:"https://www.huya.com/g/lol"},
@@ -912,7 +909,7 @@ mainEl.addEventListener('click', e => {
   sec.classList.toggle('collapsed', collapsed.has(gi));
   foldToggle.textContent = allFolded() ? '全部展开' : '全部折叠';
 });
-  
+
 /* ============ 回到顶部 ============ */
 const toTopBtn = document.getElementById('toTop');
 function checkScroll(){ toTopBtn.classList.toggle('on', window.scrollY > 420); }
