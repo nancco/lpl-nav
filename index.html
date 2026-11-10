@@ -404,7 +404,7 @@ kbd{
   <div class="top-inner">
     <a class="brand" href="#top">
       <span class="mark">L</span>
-      <span class="brand-t"><b>LPL 观赛导航</b><i>直播间 · 二路 · 赛程 · 回放</i></span>
+      <span class="brand-t"><b>lpl-nav导航</b><i>直播间 · 二路 · 赛程 · 回放</i></span>
     </a>
     <div class="tools">
       <div class="search-wrap">
@@ -473,7 +473,6 @@ kbd{
       <button class="chip on" data-pf="all">全部</button>
       <button class="chip" data-pf="bili">B站</button>
       <button class="chip" data-pf="huya">虎牙</button>
-      <button class="chip" data-pf="douyu">斗鱼</button>
     </div>
     <button class="chip" id="foldToggle">全部折叠</button>
     <div class="sp"></div>
@@ -516,7 +515,7 @@ kbd{
 <footer>
   <div class="frow">
     <div class="fleft">
-      <div>纯粉丝自制的观赛入口聚合页，与腾讯、Riot、B站、虎牙、斗鱼各平台均无隶属关系。</div>
+      <div>纯粉丝自制的观赛入口聚合页，与腾讯、Riot、B站、虎牙各平台均无隶属关系。</div>
       <div>只做指路，不转载任何赛事内容；赛事版权归 ©TENCENT & ©Riot Games, Inc. 及各授权平台所有。</div>
       <div class="ftip">纯前端项目，建议先点右上角「导出」存一份本地备份，网络访问异常时可以直接打开本地文件。</div>
     </div>
@@ -565,26 +564,27 @@ kbd{
 /* ============ 链接数据 ============ */
 let GROUPS = [
   {
-    title: "官方主舞台直播",
+    title: "官方主舞台",
     desc: "LPL 官方正规主直播源，画质优先走这条线。房间号点一下复制，卡片本体点开直播间。",
     items: [
-      {name:"赛事官网", ic:"lpl", url:"https://lpl.qq.com/", note:"LPL 官方原画超清"},
+      {name:"赛事官网", ic:"lpl", url:"https://lpl.qq.com/", note:"LPL 官方网站原画超清"},
+       {name:"赛事官网直播", ic:"lpl", url:"https://lpl.qq.com/web202301/live.html", note:"LPL 官网直播直播间"},
       {name:"B站官方直播", ic:"bili", room:"6", url:"https://live.bilibili.com/6", note:"哔哩哔哩官方主直播间"},
       {name:"虎牙官方直播", ic:"huya", room:"660000", url:"https://www.huya.com/660000", note:"虎牙官方主直播间"},
-      {name:"斗鱼官方直播", ic:"douyu", room:"288016", url:"https://www.douyu.com/288016", note:"斗鱼官方主直播间"}
     ]
   },
   {
-    title: "备用直播 & 官方二路流",
+    title: "备用&官方二路流",
     desc: "主直播间卡顿、掉帧时改走备用源，赛事期间同步开播。",
     items: [
       {name:"B站二路 · 高能观赛团", ic:"bili", room:"616", url:"https://live.bilibili.com/616", note:"官方二路流 / 备用"},
-      {name:"虎牙赛事副舞台", ic:"huya", room:"660137", url:"https://www.huya.com/660137", note:"虎牙官方备用流"},
-      {name:"B站 4K 赛事", ic:"bili", room:"24", url:"https://live.bilibili.com/24", note:"4K 高码率赛事流"}
+      {name:"B站4K赛事", ic:"bili", room:"24", url:"https://live.bilibili.com/24", note:"哔哩哔哩4K高码率赛事流"},
+       {name:"虎牙赛事副舞台", ic:"huya", room:"660137", url:"https://www.huya.com/660137", note:"虎牙官方备用流"},
+       {name:"腾讯视频", ic:"lpl", url:"https://v.qq.com/channel/game_new", note:"游戏频道"},
     ]
   },
   {
-    title: "二路 OB 主播",
+    title: "二路OB主播",
     desc: "退役选手与解说的个人二路，看比赛顺带听梗。只收赛事解说向直播间。",
     items: [
       {name:"Zz1tai 姿态", ic:"huya", room:"333003", url:"https://www.huya.com/333003", note:"整活 + 赛事分析"},
@@ -594,7 +594,7 @@ let GROUPS = [
     ]
   },
   {
-    title: "LPL 俱乐部官方账号",
+    title: "LPL俱乐部官方账号",
     desc: "主队 B 站主页，发赛前宣传与赛事集锦。俱乐部重组、改名、账号迁移都可能换号，失效欢迎反馈。",
     items: [
       {name:"BLG 哔哩哔哩电子竞技俱乐部", ic:"bili", url:"https://space.bilibili.com/268999208", note:"BLG | Bilibili Gaming"},
@@ -614,26 +614,27 @@ let GROUPS = [
     ]
   },
   {
-    title: "查赛程 & 数据",
+    title: "查赛程&数据",
     desc: "赛程、战绩、选手数据、时区换算，海外党核对开赛时间用最后一条。",
     items: [
-      {name:"LPL 官方赛程", ic:"lpl", url:"https://lpl.qq.com/web202301/data-index.shtml", note:"官方赛程表"},
+      {name:"官网官方数据", ic:"lpl", url:"https://lpl.qq.com/web202301/data-index.shtml", note:"官网数据表"},
+      {name:"B站官方赛程", ic:"bili", url:"https://www.bilibili.com/match/game?gid=2&sid=806", note:"哔哩哔哩官方赛程表"},
       {name:"玩加电竞", ic:"wanplus", url:"https://www.wanplus.cn/", note:"数据、战绩、选手统计"},
       {name:"Time.is 时差换算", ic:"timeis", url:"https://time.is/", note:"海外党核对开赛时间"}
     ]
   },
   {
-    title: "玩家社区 & 资讯",
+    title: "玩家社区&资讯",
     desc: "赛后讨论、节奏现场、硬核分析，按口味自取。",
     items: [
       {name:"英雄联盟吧", ic:"tieba", url:"https://tieba.baidu.com/f?kw=%E8%8B%B1%E9%9B%84%E8%81%AA%E7%9B%9F", note:"贴吧主吧"},
       {name:"抗压背锅吧", ic:"tieba", url:"https://tieba.baidu.com/f?kw=%E6%8A%97%E5%8E%8B%E8%83%8C%E9%94%85", note:"赛后讨论主场"},
       {name:"NGA 英雄联盟板块", ic:"nga", url:"https://bbs.nga.cn/thread.php?fid=-152678", note:"硬核赛事分析"},
-      {name:"虎扑 LOL 区", ic:"hupu", url:"https://www.hupu.com/community/3001.html", note:"赛后热点讨论"}
+      {name:"虎扑 LOL 区", ic:"hupu", url:"https://bbs.hupu.com/lol", note:"赛后热点讨论"}
     ]
   },
   {
-    title: "S 赛决赛回放（S3–S15）",
+    title: "S赛决赛回放（S3–S15）",
     desc: "决赛录像按年排，LPL 三冠 S8 / S9 / S11 已在名字里标出。S16 等官方更新。",
     items: [
       {name:"S3 决赛", ic:"bili", url:"https://www.bilibili.com/video/BV1HD4y1o7sF", note:"S3 决赛回放"},
@@ -652,7 +653,7 @@ let GROUPS = [
     ]
   },
   {
-    title: "S 赛主题曲 MV",
+    title: "S赛主题曲MV",
     desc: "历年主题曲合集，情怀向，只留这一个长期更新入口。",
     items: [
       {name:"全球总决赛主题曲 MV 合集", ic:"bili", url:"https://www.bilibili.com/video/BV1St411o7ra", note:"长期更新合集"}
@@ -663,18 +664,35 @@ let GROUPS = [
     desc: "客户端与拳头官网入口。",
     items: [
       {name:"英雄联盟官网", ic:"lol", url:"https://lol.qq.com/", note:"国服官网（腾讯游戏）"},
+      {name:"游戏下载", ic:"lol", url:"https://lol.qq.com/download.shtml?ADTAG=lolweb.v3", note:"看完比赛玩一把~"},
       {name:"拳头游戏官网", ic:"riot", url:"https://www.riotgames.com/", note:"拳头游戏官网"}
     ]
   },
   {
-    title: "电竞工具 & 资讯",
+      title: "游戏官号",
+    desc: "各平台视频官方号（视频网站有app的请搜索“英雄联盟”或“英雄联盟赛事”）。",
+    items: [
+      {name:"哔哩哔哩英雄联盟赛事", ic:"bili", url:"https://space.bilibili.com/50329118", note:"赛事B站官方直播号"},
+      {name:"英雄联盟赛事", ic:"bili", url:"https://space.bilibili.com/108532523", note:"赛事B站官方频道"},
+      {name:"哔哩哔哩LOL赛事直播", ic:"bili", url:"https://www.riotgames.com/", note:"赛事B站官方二流直播号"},
+      {name:"英雄联盟（哔哩哔哩）", ic:"bili", url:"https://www.riotgames.com/", note:"B站官方号"},
+      {name:"英雄联盟赛事（抖音）", ic:"dy", url:"https://www.douyin.com/user/MS4wLjABAAAAnFi0NM-8ylGq16b2oSBdtOHDzoqBtGN7X0PzKAo8HXNeAJiJwoGmUBPpWY9xY2Kl?from_tab_name=main", note:"赛事抖音官方号"},
+      {name:"英雄联盟（抖音）", ic:"dy", url:"https://www.douyin.com/user/MS4wLjABAAAAUwBlMR9TkuAsoU4wEMMOhrzNsvNueBCxAA8EKtmJquM?from_tab_name=main", note:"抖音官方号"},
+      {name:"英雄联盟（快手）", ic:"ks", url:"https://www.kuaishou.com/profile/3x9xpimjjad8zeq?source=SEARCH", note:"快手官方号"},
+      {name:"英雄联盟赛事（小红书）", ic:"xhs", url:"https://www.xiaohongshu.com/user/profile/66bdc315000000001d0236dd?xsec_token=ABfvpWTeuIA8wT7WHnhn5rGj4p70wgWGDLNiMaMSLGFss%3D&xsec_source=pc_search", note:"赛事小红书官方号"},
+      {name:"英雄联盟（小红书）", ic:"xhs", url:"https://www.xiaohongshu.com/user/profile/5e967a27000000000100aa22?xsec_token=ABFZ99Z-0TUCxDal-eJ0esDY6fEel0IYZFe2SGnOJBKg8%3D&xsec_source=pc_search", note:"小红书官方号"}
+    ]
+  },
+  {
+    title: "电竞工具&资讯",
     desc: "英雄数据、对位出装、职业选手战绩。纯跳转入口，不做抓取。",
     items: [
-      {name:"LoL Esports 官方赛事", ic:"lol", url:"https://lolesports.com/", note:"国际赛赛程 · 赛果"},
-      {name:"掌上英雄联盟（掌盟）", ic:"lol", url:"https://lol.qq.com/app/index.html", note:"官方 App · 战绩 / 资讯 / 赛事直播"},
+      {name:"LoL Esports", ic:"lol", url:"https://lolesports.com/", note:"国际赛赛程 /赛果"},
+      {name:"Global Power Rankings", ic:"lol", url:"https://lolesports.com/zh-TW/gpr/2026/current", note:"全球实力排名"},
+      {name:"掌上英雄联盟", ic:"lol", url:"https://lol.qq.com/app/index.html", note:"官方 App · 战绩 / 资讯 / 赛事直播"},
       {name:"101 英雄数据库", ic:"lol", url:"https://101.qq.com/", note:"国服英雄 · 技能数值"},
       {name:"官方攻略中心", ic:"lol", url:"https://lol.qq.com/guide", note:"出装符义 · 对位打法"},
-      {name:"赛高 Scoregg", ic:"lol", url:"https://www.scoregg.com/", note:"职业选手 · 战队历史数据"}
+      {name:"赛高Scoregg", ic:"lol", url:"https://www.scoregg.com/", note:"职业选手 · 战队历史数据"}
     ]
   }
 ];;
