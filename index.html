@@ -471,8 +471,14 @@ kbd{
     <div class="filters" id="filters">
     <div class="fl">
       <button class="chip on" data-pf="all">全部</button>
+      <button class="chip" data-pf="lpl">TX</button>
       <button class="chip" data-pf="bili">B站</button>
       <button class="chip" data-pf="huya">虎牙</button>
+      <button class="chip" data-pf="dy">抖音</button>
+      <button class="chip" data-pf="ks">快手</button>
+      <button class="chip" data-pf="xhs">小红书</button>
+       <button class="chip" data-pf="wb">微博</button>
+      <button class="chip" data-pf="lol">游戏</button>
     </div>
     <button class="chip" id="foldToggle">全部折叠</button>
     <div class="sp"></div>
@@ -580,7 +586,7 @@ let GROUPS = [
       {name:"B站二路 · 高能观赛团", ic:"bili", room:"616", url:"https://live.bilibili.com/616", note:"官方二路流 / 备用"},
       {name:"B站4K赛事", ic:"bili", room:"24", url:"https://live.bilibili.com/24", note:"哔哩哔哩4K高码率赛事流"},
        {name:"虎牙赛事副舞台", ic:"huya", room:"660137", url:"https://www.huya.com/660137", note:"虎牙官方备用流"},
-       {name:"腾讯视频", ic:"lpl", url:"https://v.qq.com/channel/game_new", note:"游戏频道"},
+       {name:"腾讯视频", ic:"", url:"https://v.qq.com/channel/game_new", note:"游戏频道"},
     ]
   },
   {
@@ -589,8 +595,15 @@ let GROUPS = [
     items: [
       {name:"Zz1tai 姿态", ic:"huya", room:"333003", url:"https://www.huya.com/333003", note:"整活 + 赛事分析"},
       {name:"Kryst4l 水晶哥", ic:"huya", room:"222523", url:"https://www.huya.com/222523", note:"梗密，解说有火气"},
-      {name:"解说米勒", ic:"huya", room:"149361", url:"https://www.huya.com/149361", note:"老牌官方解说"},
       {name:"老实憨厚的笑笑", ic:"bili", room:"7777", url:"https://live.bilibili.com/7777", note:"德云色二路"}
+      {name:"Sask（脚神）", ic:"huya", room:"579236", url:"https://www.huya.com/579236", note:"常和姿态连麦"},
+      {name:"957腿哥", ic:"huya", room:"890001", url:"https://www.huya.com/890001", note:"老WE上单，战术很稳"},
+      {name:"Letme严君泽", ic:"huya", room:"518518", url:"https://www.huya.com/518518", note:"RNG老上单二路"},
+      {name:"Ning宁王", ic:"huya", room:"980312", url:"https://www.huya.com/980312", note:"IG打野，大赛二路"},
+      {name:"赵俊日", ic:"bili", room:"22174141", url:"https://live.bilibili.com/22174141", note:"复盘清晰"},
+      {name:"PYL平野绫", ic:"bili", room:"22439496", url:"https://live.bilibili.com/22439496", note:"老辅助视角"},
+      {name:"小伞", ic:"douyu", room:"599358", url:"https://www.douyu.com/599358", note:"AD视角二路"},
+      {name:"楚钧艾克", ic:"bili", room:"21436528", url:"https://live.bilibili.com/21436528", note:"硬核战术复盘"}
     ]
   },
   {
@@ -666,12 +679,12 @@ let GROUPS = [
     items: [
       {name:"英雄联盟官网", ic:"lol", url:"https://lol.qq.com/", note:"国服官网（腾讯游戏）"},
       {name:"游戏下载", ic:"lol", url:"https://lol.qq.com/download.shtml?ADTAG=lolweb.v3", note:"看完比赛玩一把~"},
-      {name:"拳头游戏官网", ic:"riot", url:"https://www.riotgames.com/", note:"拳头游戏官网"}
+      {name:"拳头游戏官网", ic:"lol", url:"https://www.riotgames.com/", note:"拳头游戏官网"}
     ]
   },
   {
       title: "游戏官方视频账号",
-    desc: "各平台视频官方号（视频网站有app的请搜索“英雄联盟”或“英雄联盟赛事”）",
+    desc: "各平台视频官方号（各平台视频官方账号👉优先打开对应APP，在APP内搜索：英雄联盟 / 英雄联盟赛事，网页仅备用）",
     items: [
       {name:"哔哩哔哩英雄联盟赛事", ic:"bili", url:"https://space.bilibili.com/50329118", note:"赛事B站官方直播号"},
       {name:"英雄联盟赛事", ic:"bili", url:"https://space.bilibili.com/108532523", note:"赛事B站官方频道"},
@@ -688,7 +701,7 @@ let GROUPS = [
   },
   {
     title: "游戏频道/分区",
-    desc: "各平台频道/分区（视频网站有app的请搜索“英雄联盟”或者去各app游戏分区）",
+    desc: "各平台频道/分区（各平台频道分区👉优先打开对应APP，在APP内搜索：英雄联盟，或者去APP分区、话题标签页查找，网页仅备用跳转）",
     items: [
       {name:"哔哩哔哩分区", ic:"bili", url:"https://live.bilibili.com/lol"},
       {name:"虎牙直播分区", ic:"huya", url:"https://www.huya.com/g/lol"},
