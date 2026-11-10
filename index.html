@@ -365,7 +365,7 @@ footer a:hover{color:var(--red)}
 <div class="video-dock">
   <div class="vd-card open" id="vdCard">
     <button class="vd-head" id="vdToggle" aria-expanded="true" aria-controls="vdBody">
-      <b>Legends Never Die</b>
+      <b>Live</b>
       <span class="vd-state">
         <span id="vdStateTxt">收起</span>
         <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -373,10 +373,10 @@ footer a:hover{color:var(--red)}
     </button>
     <div class="vd-body" id="vdBody">
       <div class="vd-frame">
-        <iframe src="https://player.bilibili.com/player.html?bvid=BV1px411M7sn&autoplay=0&loop=1&high_quality=1&danmaku=0"
+        <iframe src="https://live.bilibili.com/live/player?cid=6&mute=1&autoplay=1"
           scrolling="no" frameborder="0" allow="autoplay; fullscreen; encrypted-media" allowfullscreen="true"></iframe>
       </div>
-      <div class="vd-foot">点画面播放，右下角可全屏；手机端不显示这块。</div>
+      <div class="vd-foot">点画面播放，右上角可全屏</div>
     </div>
   </div>
 </div>
@@ -506,15 +506,15 @@ const GROUPS = [
     title: "S 赛主题曲 MV",
     desc: "历年主题曲合集，情怀向，只留这一个长期更新入口。",
     items: [
-      {name:"英雄联盟全球总决赛主题曲 MV 合集", ic:"bili", url:"https://www.bilibili.com/video/BV1St411o7ra", note:"长期更新合集"}
+      {name:"全球总决赛主题曲 MV 合集", ic:"bili", url:"https://www.bilibili.com/video/BV1St411o7ra", note:"长期更新合集"}
     ]
   },
   {
     title: "游戏相关官网",
     desc: "客户端与拳头官网入口。",
     items: [
-      {name:"英雄联盟官网", ic:"lol", url:"https://lol.qq.com/", note:"国服官网"},
-      {name:"拳头游戏官网", ic:"riot", url:"https://www.riotgames.com/", note:"国际服官网"}
+      {name:"英雄联盟官网", ic:"lol", url:"https://lol.qq.com/", note:"国服官网（腾讯游戏）"},
+      {name:"拳头游戏官网", ic:"riot", url:"https://www.riotgames.com/", note:"拳头官网"}
     ]
   }
 ];
@@ -654,15 +654,14 @@ document.getElementById('fbBtn').addEventListener('click', ()=> modal.classList.
 document.getElementById('modalClose').addEventListener('click', ()=> modal.classList.remove('on'));
 modal.addEventListener('click', e=>{ if(e.target === modal) modal.classList.remove('on'); });
 
-/* ============ 项目地址：换成你自己的 GitHub 仓库链接 ============ */
-const REPO_URL = "https://github.com/";
+/* ============ 项目地址 ============ */
+const REPO_URL = "https://github.com/nancco/lpl-nav";
 const repoLink = document.getElementById('repoLink');
 if(REPO_URL && REPO_URL !== "https://github.com/"){
   repoLink.href = REPO_URL;
 } else {
   repoLink.addEventListener('click', e=>{
     e.preventDefault();
-    toast('项目地址还没填：在代码里搜索 REPO_URL 换成自己的仓库链接');
   });
 }
 
