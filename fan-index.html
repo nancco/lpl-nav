@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LPL 应援导航</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23cf2027'/%3E%3Ctext x='32' y='44' font-size='34' font-family='system-ui' font-weight='700' fill='%23fff' text-anchor='middle'%3E%E5%BA%94%3C/text%3E%3C/svg%3E">
+<script>
+try{ if(localStorage.getItem('lpl-theme')==='dark') document.documentElement.dataset.theme='dark'; }catch(err){}
+</script>
+<style>
+:root{
+  --bg:#f7f6f3; --card:#fff; --line:#e6e3dd; --line-2:#d8d3ca;
+  --tx:#1d1c1a; --tx-2:#55524d; --tx-3:#918c84;
+  --accent:#cf2027; --accent-soft:#fbeaea;
+  --shadow:0 1px 2px rgba(20,18,15,.05); --shadow-hi:0 6px 18px -10px rgba(20,18,15,.28);
+}
+html[data-theme="dark"]{
+  --bg:#131315; --card:#1b1b1e; --line:#2a2a2f; --line-2:#3a3a41;
+  --tx:#ececea; --tx-2:#a8a49e; --tx-3:#726d66;
+  --accent:#e8434a; --accent-soft:#2a1416;
+  --shadow:0 1px 2px rgba(0,0,0,.4); --shadow-hi:0 10px 26px -14px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--tx);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;font-size:14px;line-height:1.55;
+}
+a{color:inherit;text-decoration:none}
+
+/* 顶栏 */
+.top{
+  position:sticky;top:0;z-index:50;background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+.top-inner{max-width:960px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.back{
+  display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 11px;
+  border:1px solid var(--line);border-radius:8px;background:var(--card);
+  color:var(--tx-2);font-size:12.5px;transition:.18s;
+}
+.back:hover{color:var(--accent);border-color:var(--accent)}
+.back svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+.brand{display:flex;align-items:center;gap:9px;flex:1;min-width:0}
+.mark{
+  width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:15px;flex:0 0 auto;
+}
+.brand-t{display:flex;flex-direction:column;min-width:0}
+.brand-t b{font-size:15px;letter-spacing:.2px}
+.brand-t i{font-style:normal;font-size:11.5px;color:var(--tx-3)}
+.tools{display:flex;align-items:center;gap:6px}
+.btn{
+  display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;
+  border:1px solid var(--line);border-radius:8px;background:var(--card);
+  color:var(--tx-2);font-size:12.5px;cursor:pointer;transition:.18s;font-family:inherit;
+}
+.btn:hover{color:var(--accent);border-color:var(--accent)}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.9}
+
+/* 搜索 */
+.search-wrap{max-width:960px;margin:0 auto;padding:0 16px 10px;display:flex;align-items:center;gap:8px}
+.search{
+  flex:1;display:flex;align-items:center;gap:7px;height:38px;padding:0 10px;
+  border:1px solid var(--line);border-radius:9px;background:var(--card);
+}
+.search svg{width:15px;height:15px;flex:0 0 15px;stroke:var(--tx-3);fill:none;stroke-width:1.8}
+.search input{
+  flex:1;border:0;outline:0;background:transparent;color:var(--tx);font-size:14px;font-family:inherit;min-width:0;
+}
+.search-reset-btn{
+  border:0;background:transparent;color:var(--tx-3);cursor:pointer;padding:2px;
+  display:grid;place-items:center;border-radius:6px;transition:.18s;
+}
+.search-reset-btn:hover{color:var(--accent)}
+.search-reset-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9}
+.spin{animation:rspin .55s linear}
+@keyframes rspin{to{transform:rotate(360deg)}}
+
+/* 筛选条：单行横向滚动 + 箭头 */
+.filter-scroll{max-width:960px;margin:0 auto;padding:0 16px 6px;display:flex;align-items:center;gap:6px}
+.filters{
+  flex:1;min-width:0;display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;
+  scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;white-space:nowrap;cursor:pointer;font-family:inherit;
+  border:1px solid var(--line);background:var(--card);color:var(--tx-2);
+  font-size:12.5px;padding:6px 11px;border-radius:999px;transition:.15s;
+}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+.chip.on{color:#fff;background:var(--accent);border-color:var(--accent)}
+.arrow{
+  flex:0 0 auto;width:26px;height:26px;display:grid;place-items:center;cursor:pointer;
+  border:1px solid var(--line);background:var(--card);border-radius:8px;color:var(--tx-2);
+}
+.arrow:hover{color:var(--accent);border-color:var(--accent)}
+.arrow:disabled{opacity:.28;cursor:not-allowed}
+.arrow svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* 主体 */
+.wrap{max-width:960px;margin:0 auto;padding:14px 16px 40px}
+.ghead{display:flex;align-items:center;gap:8px;margin:16px 0 10px}
+.ghead h2{margin:0;font-size:15px;font-weight:600}
+.ghead em{
+  font-style:normal;font-size:11.5px;color:var(--tx-3);
+  border:1px solid var(--line);border-radius:999px;padding:1px 7px;
+}
+.cards{display:grid;grid-template-columns:1fr;gap:9px}
+@media (min-width:560px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:900px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+.card{
+  position:relative;background:var(--card);border:1px solid var(--line);border-radius:11px;
+  padding:11px 12px;box-shadow:var(--shadow);transition:border-color .18s,box-shadow .18s,transform .18s;
+}
+.card:hover{border-color:var(--line-2);box-shadow:var(--shadow-hi);transform:translateY(-1px)}
+.pname{display:flex;align-items:center;gap:7px;margin-bottom:2px;min-width:0}
+.pname b{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pos{
+  flex:0 0 auto;font-size:11px;font-weight:600;color:var(--accent);
+  border:1px solid var(--accent-soft);background:var(--accent-soft);
+  border-radius:6px;padding:1px 6px;
+}
+.pnote{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--tx-3);min-width:0}
+.pnote .tm{flex:0 0 auto;border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:11px;color:var(--tx-2)}
+.pnote em{font-style:normal;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sep{flex:0 0 auto;width:1px;height:18px;background:var(--line);margin:0 2px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.act{
+  font-size:11.5px;padding:3px 9px;border:1px solid var(--line);border-radius:6px;
+  color:var(--tx-2);transition:.15s;
+}
+.act:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+
+/* 选手详情抽屉 */
+.drawer-mask{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1200;
+  opacity:0;visibility:hidden;transition:opacity .24s,visibility .24s;
+}
+.drawer-mask.on{opacity:1;visibility:visible}
+.drawer{
+  position:fixed;top:0;right:0;width:min(440px,92vw);height:100%;
+  background:var(--bg);border-left:1px solid var(--line);z-index:1201;
+  transform:translateX(104%);transition:transform .26s cubic-bezier(.22,.61,.36,1);
+  display:flex;flex-direction:column;
+}
+.drawer.on{transform:translateX(0)}
+.drawer-head{
+  display:flex;align-items:center;gap:10px;padding:12px 14px;
+  border-bottom:1px solid var(--line);flex:0 0 auto;
+}
+.drawer-back{
+  display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;
+  border:1px solid var(--line);border-radius:8px;background:var(--card);
+  color:var(--tx-2);font-size:12.5px;cursor:pointer;font-family:inherit;
+}
+.drawer-back:hover{color:var(--accent);border-color:var(--accent)}
+.drawer-back svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.drawer-title{font-size:15px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drawer-body{padding:14px;overflow-y:auto;flex:1 1 auto}
+.dtop{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.davatar{
+  width:60px;height:60px;flex:0 0 60px;border-radius:12px;background:var(--accent);
+  color:#fff;display:grid;place-items:center;font-weight:700;font-size:20px;letter-spacing:.5px;
+}
+.dbasic{min-width:0}
+.dname{font-size:17px;font-weight:600}
+.dmeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.dtag{
+  font-size:11px;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--tx-2);
+}
+.dtag.hl{border-color:var(--accent-soft);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.dreal{font-size:12.5px;color:var(--tx-3);margin-top:6px}
+.dblock{margin:0 0 16px}
+.dblock h4{margin:0 0 6px;font-size:13px;font-weight:600;color:var(--tx-2)}
+.dblock p{margin:0;font-size:13px;color:var(--tx-2);line-height:1.7}
+.dblock .dlink{
+  display:inline-flex;align-items:center;font-size:12.5px;
+  border:1px solid var(--line);border-radius:7px;padding:5px 9px;
+  color:var(--tx-2);margin:0 6px 6px 0;transition:.15s;
+}
+.dblock .dlink:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.dcopy{
+  width:100%;height:38px;border-radius:9px;border:1px solid var(--line);
+  background:var(--card);color:var(--tx);cursor:pointer;font-family:inherit;font-size:13px;
+  transition:.15s;
+}
+.dcopy:hover{color:var(--accent);border-color:var(--accent)}
+.dcopy.done{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* 梗条 */
+.quote-bar{
+  max-width:960px;margin:10px auto 0;padding:0 16px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.quote-bar .qmark{
+  flex:0 0 auto;width:20px;height:20px;border-radius:5px;background:var(--accent-soft);
+  color:var(--accent);font-size:12px;font-weight:700;display:grid;place-items:center;
+}
+.quote-bar .qtext{font-size:12.5px;color:var(--tx-2);min-width:0;flex:1 1 auto}
+.quote-bar .qtext b{color:var(--tx);font-weight:600;margin-right:4px}
+.quote-bar .qbtn{
+  flex:0 0 auto;font-family:inherit;font-size:11.5px;border:1px solid var(--line);
+  background:var(--card);color:var(--tx-3);border-radius:6px;padding:3px 8px;cursor:pointer;transition:.15s;
+}
+.quote-bar .qbtn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* 分组切换 */
+.group-switch{
+  max-width:960px;margin:8px auto 0;padding:0 16px;display:flex;align-items:center;gap:6px;
+}
+.group-switch .lb{font-size:11.5px;color:var(--tx-3)}
+.gs{
+  font-family:inherit;font-size:12px;cursor:pointer;padding:3px 10px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);color:var(--tx-2);transition:.15s;
+}
+.gs.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.gs:hover{border-color:var(--accent);color:var(--accent)}
+.gs.on:hover{color:#fff}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,12px);
+  background:var(--tx);color:var(--bg);border-radius:999px;padding:9px 16px;
+  font-size:12.5px;opacity:0;pointer-events:none;transition:.24s;z-index:300;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+body,.card,.top,.filters .chip,.btn,.search{transition:background-color .22s ease,color .22s ease,border-color .22s ease}
+
+@media (max-width:700px){
+  .quote-bar .qmark{order:1}
+  .quote-bar .qtext{order:2;flex:1 0 100%}
+  .quote-bar .qbtn{order:3}
+  .quote-bar{gap:6px}
+  .group-switch{padding:0 14px}
+  .top-inner{padding:9px 14px;gap:8px}
+  .brand{flex:1 0 100%;order:2}
+  .back{order:1}
+  .tools{order:3;margin-left:auto}
+  .search-wrap,.filter-scroll{padding:0 14px 9px}
+  .wrap{padding:12px 14px 34px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="back" href="index.html">
+      <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      返回导航
+    </a>
+    <div class="brand">
+      <span class="mark">应</span>
+      <span class="brand-t"><b>LPL 应援导航</b><i>选手 · 超话 · 二创 · 直播</i></span>
+    </div>
+    <div class="tools">
+      <button class="btn" id="themeBtn">
+        <svg viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/></svg>
+        <span id="themeTxt">深色</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <label class="search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+    <input id="kw" type="search" placeholder="搜选手 ID / 战队 / 位置" autocomplete="off">
+  </label>
+  <button class="search-reset-btn" id="reset" title="清空搜索">
+    <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+  </button>
+</div>
+
+<div class="filter-scroll">
+  <button class="arrow" id="aL" aria-label="向左"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div class="filters" id="filters"></div>
+  <button class="arrow" id="aR" aria-label="向右"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+</div>
+
+<div class="quote-bar" id="quoteBar">
+  <span class="qmark">梗</span>
+  <span class="qtext" id="qText"></span>
+  <button class="qbtn" id="qNext">换一句</button>
+  <button class="qbtn" id="exportBtn">导出名单</button>
+</div>
+
+<div class="group-switch" id="groupSwitch">
+  <span class="lb">分组</span>
+  <button class="gs on" data-g="tag">按身份</button>
+  <button class="gs" data-g="team">按战队</button>
+</div>
+
+<div class="wrap" id="main"></div>
+
+<div class="foot">
+  只收职业选手（解说与二路主播见主页面「二路 OB 主播」分组）；选手去向随转会变动，卡片说明只作参考。<br>
+  链接失效或想加选手 / 粉丝站，发邮件到 <a href="mailto:ycccc1210@163.com">ycccc1210@163.com</a>。
+</div>
+
+<div class="drawer-mask" id="dMask"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <button class="drawer-back" id="dBack">
+      <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      返回
+    </button>
+    <div class="drawer-title" id="dTitle">选手详情</div>
+  </div>
+  <div class="drawer-body" id="dBody"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- 数据 ----------
+   tag: 现役 / 名宿（解说与主播归主页面二路分组，不放这里）
+   pos: 位置
+   note: 一句话说明
+   room: 有直播就填房号（虎牙）
+   name 用于 B站 / 微博 搜索
+------------------------------ */
+const PLAYERS = [
+  // 上路
+  {name:"TheShy", pos:"上单", team:"IG", tag:"现役", note:"上路进攻天花板"},
+  {name:"Bin", pos:"上单", team:"BLG", tag:"现役", note:"对线狂魔，看他就行"},
+  {name:"369", pos:"上单", team:"TES", tag:"现役", note:"稳定型上路"},
+  {name:"Flandre 圣枪哥", pos:"上单", team:"JDG", tag:"现役", note:"S11 冠军上单"},
+  {name:"Breathe", pos:"上单", team:"RNG", tag:"现役", note:"上路多面手"},
+  // 打野
+  {name:"Jiejie", pos:"打野", team:"IG", tag:"现役", note:"S11 冠军打野"},
+  {name:"Kanavi", pos:"打野", team:"TES", tag:"现役", note:"节奏型外援打野"},
+  {name:"Xun", pos:"打野", team:"JDG", tag:"现役", note:"野核擅长"},
+  {name:"Tian", pos:"打野", team:"TES", tag:"现役", note:"S9 冠军打野"},
+  {name:"Tarzan", pos:"打野", team:"AL", tag:"现役", note:"老牌外援打野"},
+  // 中路
+  {name:"Rookie", pos:"中单", team:"IG", tag:"现役", note:"S8 冠军中单"},
+  {name:"Knight", pos:"中单", team:"BLG", tag:"现役", note:"国产顶尖中单"},
+  {name:"Xiaohu", pos:"中单", team:"WBG", tag:"现役", note:"三冠中单"},
+  {name:"Scout", pos:"中单", team:"JDG", tag:"现役", note:"S11 FMVP"},
+  {name:"Creme", pos:"中单", team:"TES", tag:"现役", note:"新生代中路"},
+  {name:"Shanks", pos:"中单", team:"AL", tag:"现役", note:"刺客中单"},
+  // ADC
+  {name:"GALA", pos:"ADC", team:"IG", tag:"现役", note:"大龙团之神"},
+  {name:"Elk", pos:"ADC", team:"BLG", tag:"现役", note:"团战输出稳定"},
+  {name:"JackeyLove", pos:"ADC", team:"TES", tag:"现役", note:"S8 冠军 ADC"},
+  {name:"Light", pos:"ADC", team:"WBG", tag:"现役", note:"手速型 ADC"},
+  {name:"Hope", pos:"ADC", team:"JDG", tag:"现役", note:"稳健输出"},
+  // 辅助
+  {name:"Meiko", pos:"辅助", team:"IG", tag:"现役", note:"S11 冠军辅助"},
+  {name:"ON", pos:"辅助", team:"BLG", tag:"现役", note:"开团型辅助"},
+  {name:"Crisp", pos:"辅助", team:"WBG", tag:"现役", note:"S9 冠军辅助"},
+  {name:"Missing", pos:"辅助", team:"JDG", tag:"现役", note:"野辅联动见长"},
+  // 名宿
+  {name:"Uzi", pos:"ADC", team:"RNG", tag:"名宿", note:"LPL 永远的 006"},
+  {name:"Clearlove 厂长", pos:"打野", team:"EDG", tag:"名宿", note:"野区厂长，战队老板"},
+  {name:"wx 微笑", pos:"ADC", team:"WE", tag:"名宿", note:"初代补刀帝"},
+  {name:"若风", pos:"中单", team:"WE", tag:"名宿", note:"卡牌大师"},
+  {name:"GodV 韦神", pos:"中单", team:"LGD", tag:"名宿", note:"反向 Q 也封神"},
+  {name:"957", pos:"上单", team:"WE", tag:"名宿", note:"上路老将，解说台常客"},
+  {name:"Smlz 老贼", pos:"ADC", team:"OMG", tag:"名宿", note:"手游一发入魂"},
+  {name:"Baolan", pos:"辅助", team:"IG", tag:"名宿", note:"S8 冠军辅助"},
+  {name:"Ming", pos:"辅助", team:"RNG", tag:"名宿", note:"Uzi 的老搭档"},
+  {name:"Doinb", pos:"中单", team:"自由", tag:"名宿", note:"整活型冠军中单"},
+  {name:"Wei", pos:"打野", team:"BLG", tag:"现役", note:"节奏型国产打野"},
+  {name:"Yagao", pos:"中单", team:"JDG", tag:"名宿", note:"稳健型中路"},
+  {name:"PDD 嫖老师", pos:"上单", team:"IG", tag:"名宿", note:"初代上路一哥"},
+  {name:"Kid 小孩游神", pos:"ADC", team:"IG", tag:"名宿", note:"初代 IG 老将"},
+  {name:"无状态 cool", pos:"中单", team:"OMG", tag:"名宿", note:"暗凯老将"}
+];
+
+/* 详细资料：只留本名 + 一句梗，荣誉 / 名场面已按需求去掉 */
+const INFO = {
+  "Uzi": {real:"简自豪", quote:"狂小狗，永远不会放弃。",},
+  "Clearlove 厂长": {real:"明凯", quote:"永不团灭。",},
+  "Rookie": {real:"宋义进", quote:"中文十级的韩援标杆。",},
+  "TheShy": {real:"姜承録", quote:"上路进攻天花板，敢打敢浪。",},
+  "JackeyLove": {real:"喻文波", quote:"阿水，敢打敢输出。",},
+  "Meiko": {real:"田野", quote:"辅助之神，场上第二个指挥。",},
+  "Xiaohu": {real:"李元浩", quote:"中路改上单再改中路，虎大将军。",},
+  "Doinb": {real:"金泰相", quote:"整活型中单，自带节目效果。",},
+  "GALA": {real:"陈伟", quote:"大龙团之神，团战永远在。",},
+  "Scout": {real:"李汭燦", quote:"中路稳定器，越关键越冷静。",},
+  "Tian": {real:"高天亮", quote:"野区节奏大师。",},
+  "Knight": {real:"卓定", quote:"国产第一中单的常客。",},
+  "Bin": {real:"陈泽彬", quote:"对线狂魔，上路能单杀就不叫打野。",},
+  "Flandre 圣枪哥": {real:"李炫君", quote:"S11 冠军上单，老将封神。",}
+};
+
+const POS_FILTERS = ["上单","打野","中单","ADC","辅助"];
+
+const FILTERS = [
+  {k:"all", label:"全部"},
+  {k:"现役", label:"现役选手"},
+  {k:"名宿", label:"退役名宿"},
+  ...POS_FILTERS.map(p => ({k:p, label:p})),
+  ...Array.from(new Set(PLAYERS.map(p => p.team))).map(t => ({k:"team:" + t, label:t}))
+];
+
+/* ---------- 元素 ---------- */
+const mainEl = document.getElementById('main');
+const filtersEl = document.getElementById('filters');
+const kwEl = document.getElementById('kw');
+const toastEl = document.getElementById('toast');
+
+let curFilter = 'all';
+
+/* ---------- 工具 ---------- */
+function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+let toastTimer = null;
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toastEl.classList.remove('on'),1600);
+}
+
+/* ---------- 链接 ---------- */
+function biliSearch(name){ return "https://search.bilibili.com/all?keyword=" + encodeURIComponent(name + " 应援"); }
+/* 微博：只对确认过的账号 / 超话给直达搜索，没有的退回普通搜索，不硬造超话 */
+const WB = {
+  "无状态 cool": {nick:"无状态COOL_", chaohua:true},
+  "若风": {nick:"Misaya若风", chaohua:true},
+  "水晶哥 Kryst4l": {nick:"kRYST4lxx", chaohua:false},
+  "Smlz 老贼": {nick:"司马老贼丶", chaohua:false},
+  "957": {nick:"WE957i", chaohua:false},
+  "Kid 小孩游神": {nick:"小孩游神", chaohua:false}
+};
+/* 返回 {label, url} */
+function wbInfo(name){
+  const it = WB[name];
+  if(it){
+    const q = it.chaohua ? "#" + it.nick + "#" : it.nick;
+    return {label: it.chaohua ? "微博超话" : "微博", url: "https://s.weibo.com/weibo?q=" + encodeURIComponent(q)};
+  }
+  return {label: "微博搜索", url: "https://s.weibo.com/weibo?q=" + encodeURIComponent(name)};
+}
+function hyLive(room){ return "https://www.huya.com/" + room; }
+
+/* ---------- 筛选条 ---------- */
+filtersEl.innerHTML = FILTERS.map((f, i) => {
+  const sep = (i === 4 || i === 4 + POS_FILTERS.length) ? '<span class="sep"></span>' : '';
+  return sep + '<button class="chip' + (f.k === 'all' ? ' on' : '') + '" data-k="' + esc(f.k) + '">' + esc(f.label) + '</button>';
+}).join('');
+
+filtersEl.addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  curFilter = chip.dataset.k;
+  filtersEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === chip));
+  render(kwEl.value);
+});
+
+/* ---------- 卡片 ---------- */
+function cardHTML(p){
+  const wb = wbInfo(p.name);
+  let acts = '<a class="act" href="' + biliSearch(p.name) + '" target="_blank" rel="noopener">B站二创</a>'
+           + '<a class="act" href="' + wb.url + '" target="_blank" rel="noopener">' + esc(wb.label) + '</a>';
+  if(p.room){
+    acts += '<a class="act" href="' + hyLive(p.room) + '" target="_blank" rel="noopener">直播间 ' + esc(p.room) + '</a>';
+  }
+  return '<article class="card" data-name="' + esc(p.name) + '">'
+    + '<div class="pname"><b>' + esc(p.name) + '</b><span class="pos">' + esc(p.pos) + '</span></div>'
+    + '<div class="pnote"><span class="tm">' + esc(p.team) + '</span><em>' + esc(p.note) + '</em></div>'
+    + '<div class="acts">' + acts + '</div>'
+    + '</article>';
+}
+
+/* ---------- 分组切换 ---------- */
+let groupBy = 'tag';
+const groupSwitch = document.getElementById('groupSwitch');
+if(groupSwitch){
+  groupSwitch.addEventListener('click', e => {
+    const b = e.target.closest('.gs');
+    if(!b || b.dataset.g === groupBy) return;
+    groupBy = b.dataset.g;
+    groupSwitch.querySelectorAll('.gs').forEach(x => x.classList.toggle('on', x.dataset.g === groupBy));
+    render(kwEl.value);
+  });
+}
+
+/* ---------- 渲染 ---------- */
+function render(kw){
+  const q = (kw || '').trim().toLowerCase();
+  const list = PLAYERS.filter(p => {
+    if(curFilter.startsWith('team:')){
+      if(p.team !== curFilter.slice(5)) return false;
+    } else if(curFilter !== 'all' && !(p.tag === curFilter || p.pos === curFilter)) return false;
+    if(!q) return true;
+    return (p.name + ' ' + p.team + ' ' + p.pos + ' ' + p.note + ' ' + p.tag).toLowerCase().indexOf(q) > -1;
+  });
+
+  if(!list.length){
+    mainEl.innerHTML = '<div class="empty"><b>没有匹配的选手</b><br>换个关键词，或者点「全部」看看。</div>';
+    return;
+  }
+
+  const groups = {};
+  const keyOf = p => groupBy === 'team' ? p.team : p.tag;
+  list.forEach(p => { const k = keyOf(p); (groups[k] = groups[k] || []).push(p); });
+
+  let order;
+  if(groupBy === 'team'){
+    order = Object.keys(groups).sort((a, b) => {
+      const tail = ['自由','官方','虎牙','B站','其他'];
+      const ra = tail.indexOf(a), rb = tail.indexOf(b);
+      if(ra > -1 || rb > -1) return (ra > -1 ? 1 : 0) - (rb > -1 ? 1 : 0);
+      return groups[b].length - groups[a].length || a.localeCompare(b, 'zh-Hans-CN');
+    });
+  } else {
+    order = ['现役','名宿'];
+  }
+  const TAG_LABEL = {'现役':'现役选手','名宿':'退役名宿'};
+
+  mainEl.innerHTML = order.filter(t => groups[t]).map(t =>
+    '<div class="ghead"><h2>' + esc(groupBy === 'team' ? t : (TAG_LABEL[t] || t)) + '</h2>'
+    + '<em>' + groups[t].length + '</em></div>'
+    + '<div class="cards">' + groups[t].map(cardHTML).join('') + '</div>'
+  ).join('');
+
+  mainEl.querySelectorAll('.card').forEach(el => {
+    el.addEventListener('click', ev => {
+      if(ev.target.closest('.act')) return;
+      const p = PLAYERS.find(x => x.name === el.dataset.name);
+      if(p) openDrawer(p);
+    });
+  });
+}
+
+/* ---------- 梗条 & 导出 ---------- */
+const qText = document.getElementById('qText');
+const qNext = document.getElementById('qNext');
+const exportBtn = document.getElementById('exportBtn');
+
+const QUOTES = Object.keys(INFO).map(n => ({n, q: INFO[n].quote}));
+let qIdx = -1;
+function nextQuote(){
+  if(!QUOTES.length) return;
+  let i;
+  do { i = Math.floor(Math.random() * QUOTES.length); } while (QUOTES.length > 1 && i === qIdx);
+  qIdx = i;
+  const it = QUOTES[i];
+  qText.innerHTML = '<b>' + esc(it.n) + '</b>' + esc(it.q);
+}
+nextQuote();
+qNext.addEventListener('click', nextQuote);
+
+exportBtn.addEventListener('click', () => {
+  const lines = ['LPL 应援导航 · 选手名单', ''];
+  ['现役','名宿'].forEach(tag => {
+    const list = PLAYERS.filter(p => p.tag === tag);
+    if(!list.length) return;
+    lines.push('【' + tag + '】');
+    list.forEach(p => {
+      const info = INFO[p.name] || {};
+      lines.push('- ' + p.name + ' | ' + p.team + ' | ' + p.pos + ' | ' + p.note
+        + (info.quote ? ' | ' + info.quote : ''));
+    });
+    lines.push('');
+  });
+  lines.push('名场面可按需在 B 站搜索「选手ID + 关键词」。');
+  const blob = new Blob([lines.join('\n')], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'LPL选手名单.txt';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  toast('名单已导出');
+});
+
+/* ---------- 选手详情抽屉 ---------- */
+const dMask = document.getElementById('dMask');
+const drawer = document.getElementById('drawer');
+const dTitle = document.getElementById('dTitle');
+const dBody = document.getElementById('dBody');
+const dBack = document.getElementById('dBack');
+
+function biliKw(kw){ return "https://search.bilibili.com/all?keyword=" + encodeURIComponent(kw); }
+
+function copyStr(t){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(t);
+  }
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); }catch(err){}
+  document.body.removeChild(ta);
+  return Promise.resolve();
+}
+
+function openDrawer(p){
+  const info = INFO[p.name] || {};
+  dTitle.textContent = p.name;
+  const tags = [p.tag, p.pos, p.team].filter(Boolean);
+
+  dBody.innerHTML =
+    '<div class="dtop">'
+      + '<div class="davatar">' + esc(/^[A-Za-z]/.test(p.name) ? p.name.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase() : p.name.replace(/[\s·]/g, '').slice(0, 2)) + '</div>'
+      + '<div class="dbasic">'
+        + '<div class="dname">' + esc(p.name) + '</div>'
+        + '<div class="dmeta">' + tags.map((t, i) => '<span class="dtag' + (i === 0 ? ' hl' : '') + '">' + esc(t) + '</span>').join('') + '</div>'
+        + (info.real ? '<div class="dreal">本名 ' + esc(info.real) + '</div>' : '')
+      + '</div>'
+    + '</div>'
+    + '<div class="dblock"><h4>经典梗 / 标签</h4><p>' + esc(info.quote || p.note || '待补充') + '</p></div>'
+    + '<div class="dblock"><h4>快捷入口</h4>'
+      + '<a class="dlink" href="' + biliSearch(p.name) + '" target="_blank" rel="noopener">B站二创</a>'
+      + '<a class="dlink" href="' + wbInfo(p.name).url + '" target="_blank" rel="noopener">' + esc(wbInfo(p.name).label) + '</a>'
+      + '<a class="dlink" href="https://tieba.baidu.com/f/search/res?ie=utf-8&qw=' + encodeURIComponent(p.name) + '" target="_blank" rel="noopener">贴吧讨论</a>'
+      + '<a class="dlink" href="' + biliKw(p.name + ' 名场面集锦') + '" target="_blank" rel="noopener">B站集锦</a>'
+      + (p.room ? '<a class="dlink" href="' + hyLive(p.room) + '" target="_blank" rel="noopener">直播间 ' + esc(p.room) + '</a>' : '')
+    + '</div>'
+    + '<button class="dcopy" id="dCopy">复制选手 ID</button>';
+
+  dBody.scrollTop = 0;
+  dMask.classList.add('on');
+  drawer.classList.add('on');
+  drawer.setAttribute('aria-hidden', 'false');
+
+  const btn = document.getElementById('dCopy');
+  btn.addEventListener('click', () => {
+    copyStr(p.name);
+    btn.classList.add('done');
+    btn.textContent = '已复制';
+    setTimeout(() => { btn.classList.remove('done'); btn.textContent = '复制选手 ID'; }, 1300);
+  });
+}
+
+function closeDrawer(){
+  dMask.classList.remove('on');
+  drawer.classList.remove('on');
+  drawer.setAttribute('aria-hidden', 'true');
+}
+dBack.addEventListener('click', closeDrawer);
+dMask.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && drawer.classList.contains('on')) closeDrawer();
+});
+
+/* ---------- 搜索 ---------- */
+let typing = null;
+kwEl.addEventListener('input', e => {
+  clearTimeout(typing);
+  const v = e.target.value;
+  typing = setTimeout(() => render(v), 60);
+});
+document.getElementById('reset').addEventListener('click', () => {
+  const btn = document.getElementById('reset');
+  btn.classList.add('spin');
+  setTimeout(() => btn.classList.remove('spin'), 560);
+  kwEl.value = '';
+  render('');
+  kwEl.focus();
+});
+document.addEventListener('keydown', e => {
+  const tag = (e.target.tagName || '').toLowerCase();
+  if(e.key === '/' && tag !== 'input'){
+    e.preventDefault(); kwEl.focus();
+  }
+  if(e.key === 'Escape' && kwEl.value){
+    kwEl.value = ''; render(''); kwEl.focus();
+  }
+});
+
+/* ---------- 筛选条箭头 ---------- */
+const fEl = filtersEl, aL = document.getElementById('aL'), aR = document.getElementById('aR');
+function syncArrows(){
+  const max = fEl.scrollWidth - fEl.clientWidth;
+  const hidden = max <= 2;
+  aL.style.visibility = aR.style.visibility = hidden ? 'hidden' : 'visible';
+  aL.disabled = fEl.scrollLeft <= 2;
+  aR.disabled = fEl.scrollLeft >= max - 2;
+}
+aL.addEventListener('click', () => fEl.scrollBy({left:-150, behavior:'smooth'}));
+aR.addEventListener('click', () => fEl.scrollBy({left:150, behavior:'smooth'}));
+fEl.addEventListener('scroll', syncArrows, {passive:true});
+window.addEventListener('resize', syncArrows);
+
+/* ---------- 主题 ---------- */
+const themeBtn = document.getElementById('themeBtn');
+const themeTxt = document.getElementById('themeTxt');
+function setTheme(t){
+  document.documentElement.dataset.theme = t;
+  themeTxt.textContent = t === 'dark' ? '浅色' : '深色';
+  try{ localStorage.setItem('lpl-theme', t); }catch(err){}
+}
+setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+themeBtn.addEventListener('click', () => {
+  setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+render('');
+syncArrows();
+</script>
+</body>
+</html>
+<!-- （注：内容由AI生成） -->
