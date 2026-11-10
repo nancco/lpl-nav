@@ -485,7 +485,6 @@ kbd{
     <button class="chip" id="importBtn">
     </button>
     <input type="file" id="importFile" accept=".json,application/json" hidden>
-    <button class="chip f-sort" id="sortBtn">
       <svg viewBox="0 0 24 24"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M14 6h6"/><path d="M14 12h4"/><path d="M14 18h2"/></svg>
       <span id="sortTxt">默认顺序</span>
     </button>
@@ -913,40 +912,7 @@ mainEl.addEventListener('click', e => {
   sec.classList.toggle('collapsed', collapsed.has(gi));
   foldToggle.textContent = allFolded() ? '全部展开' : '全部折叠';
 });
-
-/* ============ 导入 JSON ============ */
-const importFile = document.getElementById('importFile');
-document.getElementById('importBtn').addEventListener('click', () => importFile.click());
-importFile.addEventListener('change', e => {
-  const f = e.target.files && e.target.files[0];
-  if(!f) return;
-  const rd = new FileReader();
-  rd.onload = () => {
-    try {
-      const data = JSON.parse(rd.result);
-      const arr = Array.isArray(data) ? data : data.groups;
-      if(!Array.isArray(arr) || !arr.length) throw new Error('格式不对');
-      GROUPS = arr.map(g => ({
-        title: String(g.title || '未命名分组'),
-        desc: String(g.desc || ''),
-        items: (g.items || []).filter(it => it && it.name && it.url).map(it => ({
-          name: String(it.name), ic: it.ic || 'bili', url: String(it.url),
-          note: it.note ? String(it.note) : '', room: it.room ? String(it.room) : ''
-        }))
-      })).filter(g => g.items.length);
-      if(!GROUPS.length) throw new Error('没有可用条目');
-      collapsed.clear();
-      buildNav();
-      render(searchEl.value);
-      toast('已导入 ' + GROUPS.length + ' 个分组');
-    } catch(err){
-      toast('导入失败：需要一个分组数组');
-    }
-  };
-  rd.readAsText(f);
-  e.target.value = '';
-});
-
+  
 /* ============ 回到顶部 ============ */
 const toTopBtn = document.getElementById('toTop');
 function checkScroll(){ toTopBtn.classList.toggle('on', window.scrollY > 420); }
