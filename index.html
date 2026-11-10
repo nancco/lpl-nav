@@ -287,6 +287,14 @@ footer{border-top:1px solid var(--line);margin-top:36px;background:var(--bg-soft
       <span class="brand-t"><b>LPL 观赛导航</b><i>直播间 · 二路 · 赛程 · 回放</i></span>
     </a>
     <div class="tools">
+      <div class="search-wrap">
+  <!-- 重置图标按钮，在最左边 -->
+  <button class="search-reset-btn" id="searchReset">
+    <svg class="refresh-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M23 4v6h-6"></path>
+      <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+    </svg>
+  </button>
       <label class="search">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
         <input id="search" type="search" placeholder="搜直播间 / 战队 / 回放" autocomplete="off" aria-label="搜索">
@@ -298,7 +306,7 @@ footer{border-top:1px solid var(--line);margin-top:36px;background:var(--bg-soft
       </button>
       <button class="btn" id="themeBtn" aria-label="切换主题">
         <svg viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/></svg>
-        <span id="themeTxt">深色</span>
+        <span id="themeTxt"></span>
       </button>
       <button class="btn" id="fbBtn">
         <svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 3z"/></svg>
