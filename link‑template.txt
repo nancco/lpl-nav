@@ -1,38 +1,27 @@
-# html链接模板文档
-# 注意：双引号 < > / 这些符号不能删，只把 xx 替换成自己内容
 
-# 【1】普通文字链接，点击新窗口打开
+### 配套 link‑template.txt（放到项目根目录）
+```txt
+# lpl‑nav 项目 HTML链接模板
+# 仅作为复制粘贴模板，xx为占位符，不要填真实url提交仓库
+
+#1 普通文字链接
 <a href="xx" target="_blank">xx</a>
-# 替换说明：
-# href="xx"  → xx改成目标完整网址
-# >xx</a>    → xx改成页面显示的文字，例：访问入口
 
-# 【2】带鼠标悬浮提示文字
+#2 带悬浮提示
 <a href="xx" target="_blank" title="xx">xx</a>
-# 替换说明：
-# href="xx"  目标网址
-# title="xx" 鼠标放上去显示的提示文字
-# >xx</a>    页面展示文字
 
-# 【3】海报图片链接，点图片跳转网址
+#3 海报图片跳转
 <a href="xx" target="_blank">
     <img src="xx" alt="xx">
 </a>
-# 替换说明：
-# href="xx"   点击图片跳转的网页地址
-# src="xx"    海报图片的网络url
-# alt="xx"    图片加载失败显示的文字，写海报说明
 
-# 【4】简易按钮样式链接
+#4 按钮样式链接
 <a href="xx" target="_blank" style="padding:8px 16px;background:#2468eb;color:#fff;text-decoration:none;border-radius:4px;">xx</a>
-# 替换说明：
-# href="xx" 目标网址
-# >xx</a> 按钮上面显示的文字
 
-# ======================
-# 📌重要备忘（防止以后忘记）
-# 1. 只修改xx，html标签符号不要改动
-# 2. url必须写完整，一般以 http / https 开头
-# 3. 不要直接把真实链接提交到github这个模板文件，本地复制出来替换xx再使用
-# 4. target="_blank" 保留，作用是新标签页打开，用户不会关掉主页面
-# 5. 更新链接时：只改对应位置的xx，其余代码不动
+# ----------替换备忘----------
+# href="xx"     目标网址
+# title="xx"    悬浮提示
+# src="xx"      图片/海报地址
+# alt="xx"      图片兜底文字
+# >xx</a>       页面显示文字
+# 只改xx，标签符号不动，target="_blank"建议保留
