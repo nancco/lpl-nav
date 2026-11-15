@@ -1020,17 +1020,6 @@ if(REPO_URL && REPO_URL !== "https://github.com/nancco/lpl-nav"){
   repoLink.addEventListener('click', e => { e.preventDefault(); toast('仓库地址未填写'); });
 }
 
-/* ============ S16 海报栏收起 / 展开（仅桌面端） ============ */
-const vdCard = document.getElementById('vdCard');
-const vdToggle = document.getElementById('vdToggle');
-const vdStateTxt = document.getElementById('vdStateTxt');
-vdToggle.addEventListener('click', () => {
-  const open = !vdCard.classList.contains('closed');
-  vdCard.classList.toggle('closed', open);
-  vdStateTxt.textContent = open ? '展开' : '收起';
-  vdToggle.setAttribute('aria-expanded', String(!open));
-});
-
 /* ============ 导出本地备份 ============ */
 document.getElementById('exportBtn').addEventListener('click', () => {
   const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
